@@ -1,5 +1,6 @@
-# React basic
+set up project on vs code:
+- install the Azure SWA vs code extension
+- install the SWA cli 
+- run project locally with "swa start"
+https://learn.microsoft.com/en-us/azure/static-web-apps/local-development
 
-[Azure Static Web Apps](https://docs.microsoft.com/azure/static-web-apps/overview) allows you to easily build [React](https://reactjs.org/) apps in minutes. Use this repo with the [React quickstart](https://docs.microsoft.com/azure/static-web-apps/getting-started?tabs=react) to build and customize a new static site.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
