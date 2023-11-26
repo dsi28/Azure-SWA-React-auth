@@ -9,3 +9,14 @@ Built in SWA auth:
 https://learn.microsoft.com/en-us/azure/static-web-apps/authentication-authorization
 
 
+
+SWA B2C set up steps:
+https://learn.microsoft.com/en-us/azure/active-directory-b2c/configure-authentication-in-azure-static-app
+
+
+create user flow: done
+https://learn.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview
+
+
+Create B2C tenant: done 
+https://learn.microsoft.com/en-us/azure/active-directory-b2c/tutorial-create-tenant?WT.mc_id=Portal-Microsoft_AAD_B2CAdmin
