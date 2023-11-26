@@ -20,5 +20,21 @@
             }
         }
         }
-    }
+    },
+    "routes": [
+        {
+          "route": "/",
+          "allowedRoles": ["anonymous"]
+        },
+          {
+          "route": "/profile",
+          "allowedRoles": ["authenticated"]
+        }
+      ],
+      "responseOverrides": {
+        "401": {
+          "statusCode": 302,
+          "redirect": "/.auth/login/aadb2c"
+        }
+      }  
   }
