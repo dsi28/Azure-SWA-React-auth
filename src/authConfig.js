@@ -18,7 +18,7 @@ export const b2cPolicies = {
     },
     authorities: {
         signUpSignIn: {
-            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/B2C_1_susi/b2c_1_susi_v2',
+            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/b2c_1_susi_v2',
         },
         forgotPassword: {
             authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/B2C_1_reset_v3',
