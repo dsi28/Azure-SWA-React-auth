@@ -12,19 +12,19 @@ import { LogLevel } from '@azure/msal-browser';
  */
 export const b2cPolicies = {
     names: {
-        signUpSignIn: 'B2C_1_susi_v2',
-        forgotPassword: 'B2C_1_reset_v3',
-        editProfile: 'B2C_1_edit_profile_v2',
+        signUpSignIn: 'B2C_1_susi',
+        forgotPassword: 'B2C_1_reset',
+        editProfile: 'B2C_1_edit_profile',
     },
     authorities: {
         signUpSignIn: {
-            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/b2c_1_susi_v2',
+            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/b2c_1_susi',
         },
         forgotPassword: {
-            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/B2C_1_reset_v3',
+            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/B2C_1_reset',
         },
         editProfile: {
-            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/b2c_1_edit_profile_v2',
+            authority: 'https://frPortalB2C.b2clogin.com/frPortalB2C.onmicrosoft.com/b2c_1_edit_profile',
         },
     },
     authorityDomain: 'frPortalB2C.b2clogin.com',
