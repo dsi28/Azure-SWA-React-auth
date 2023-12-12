@@ -23,7 +23,7 @@ export const PageLayout = (props) => {
                             rel="noopener noreferrer"
                         >
                             {' '}
-                            Share your experience!
+                            Share your experience !
                         </a>
                     </center>
                 </footer>
