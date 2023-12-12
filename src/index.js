@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 
-
 import { EventType, PublicClientApplication } from '@azure/msal-browser';
 import { BrowserRouter } from 'react-router-dom';
 import { msalConfig } from './authConfig';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App';
 import './styles/index.css';
 
 /**
@@ -37,8 +37,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-        <div>test</div>
-            {/* <App instance={msalInstance} /> */}
+            <App instance={msalInstance} />
         </BrowserRouter>
     </React.StrictMode>
 );
+// ReactDOM.render(
+//     <React.StrictMode>
+// <BrowserRouter>
+
+//       <App />
+//       </BrowserRouter>
+//     </React.StrictMode>,
+//     document.getElementById('root'),
+//   )

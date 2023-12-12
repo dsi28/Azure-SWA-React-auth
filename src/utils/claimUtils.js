@@ -1,97 +1,235 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
-
-import { LogLevel } from '@azure/msal-browser';
-
 /**
- * Enter here the user flows and custom policies for your B2C application
- * To learn more about user flows, visit: https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview
- * To learn more about custom policies, visit: https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview
+ * Populate claims table with appropriate description
+ * @param {Object} claims ID token claims
+ * @returns claimsObject
  */
-export const b2cPolicies = {
-    names: {
-        signUpSignIn: 'B2C_1_susi_v2',
-        forgotPassword: 'B2C_1_reset_v3',
-        editProfile: 'B2C_1_edit_profile_v2',
-    },
-    authorities: {
-        signUpSignIn: {
-            authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi_v2',
-        },
-        forgotPassword: {
-            authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/B2C_1_reset_v3',
-        },
-        editProfile: {
-            authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_edit_profile_v2',
-        },
-    },
-    authorityDomain: 'fabrikamb2c.b2clogin.com',
+export const createClaimsTable = (claims) => {
+    let claimsObj = {};
+    let index = 0;
+
+    Object.keys(claims).forEach((key) => {
+        switch (key) {
+            case 'aud':
+                populateClaim(
+                    key,
+                    claims[key],
+                    "Identifies the intended recipient of the token. In ID tokens, the audience is your app's Application ID, assigned to your app in the Azure portal.",
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'iss':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'Identifies the issuer, or authorization server that constructs and returns the token. It also identifies the Azure AD tenant for which the user was authenticated. If the token was issued by the v2.0 endpoint, the URI will end in /v2.0. The GUID that indicates that the user is a consumer user from a Microsoft account is 9188040d-6c67-4c5b-b112-36a304b66dad.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'iat':
+                populateClaim(
+                    key,
+                    changeDateFormat(claims[key]),
+                    'Issued At indicates when the authentication for this token occurred.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'nbf':
+                populateClaim(
+                    key,
+                    changeDateFormat(claims[key]),
+                    'The nbf (not before) claim identifies the time (as UNIX timestamp) before which the JWT must not be accepted for processing.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'exp':
+                populateClaim(
+                    key,
+                    changeDateFormat(claims[key]),
+                    "The exp (expiration time) claim identifies the expiration time (as UNIX timestamp) on or after which the JWT must not be accepted for processing. It's important to note that in certain circumstances, a resource may reject the token before this time. For example, if a change in authentication is required or a token revocation has been detected.",
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'name':
+                populateClaim(
+                    key,
+                    claims[key],
+                    "The name claim provides a human-readable value that identifies the subject of the token. The value isn't guaranteed to be unique, it can be changed, and it's designed to be used only for display purposes. The profile scope is required to receive this claim.",
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'preferred_username':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'The primary username that represents the user. It could be an email address, phone number, or a generic username without a specified format. Its value is mutable and might change over time. Since it is mutable, this value must not be used to make authorization decisions. It can be used for username hints, however, and in human-readable UI as a username. The profile scope is required in order to receive this claim.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'nonce':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'The nonce matches the parameter included in the original /authorize request to the IDP. If it does not match, your application should reject the token.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'oid':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'The oid (user’s object id) is the only claim that should be used to uniquely identify a user in an Azure AD tenant. The token might have one or more of the following claim, that might seem like a unique identifier, but is not and should not be used as such.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'tid':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'The tenant ID. You will use this claim to ensure that only users from the current Azure AD tenant can access this app.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'upn':
+                populateClaim(
+                    key,
+                    claims[key],
+                    '(user principal name) – might be unique amongst the active set of users in a tenant but tend to get reassigned to new employees as employees leave the organization and others take their place or might change to reflect a personal change like marriage.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'email':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'Email might be unique amongst the active set of users in a tenant but tend to get reassigned to new employees as employees leave the organization and others take their place.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'acct':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'Available as an optional claim, it lets you know what the type of user (homed, guest) is. For example, for an individual’s access to their data you might not care for this claim, but you would use this along with tenant id (tid) to control access to say a company-wide dashboard to just employees (homed users) and not contractors (guest users).',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'sid':
+                populateClaim(key, claims[key], 'Session ID, used for per-session user sign-out.', index, claimsObj);
+                index++;
+                break;
+            case 'sub':
+                populateClaim(
+                    key,
+                    claims[key],
+                    "The principal about which the token asserts information, such as the user of an application. This value is immutable and can't be reassigned or reused. It can be used to perform authorization checks safely, such as when the token is used to access a resource. By default, the subject claim is populated with the object ID of the user in the directory",
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'ver':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'Version of the token issued by the Microsoft identity platform',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'auth_time':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'The time at which a user last entered credentials, represented in epoch time. There is no discrimination between that authentication being a fresh sign-in, a single sign-on (SSO) session, or another sign-in type.',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'at_hash':
+                populateClaim(
+                    key,
+                    claims[key],
+                    'An access token hash included in an ID token only when the token is issued together with an OAuth 2.0 access token. An access token hash can be used to validate the authenticity of an access token',
+                    index,
+                    claimsObj
+                );
+                index++;
+                break;
+            case 'uti':
+            case 'rh':
+                index++;
+                break;
+            default:
+                populateClaim(key, claims[key], '', index, claimsObj);
+                index++;
+        }
+    });
+
+    return claimsObj;
 };
 
 /**
- * Configuration object to be passed to MSAL instance on creation.
- * For a full list of MSAL.js configuration parameters, visit:
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md
+ * Populates claim, description, and value into an claimsObject
+ * @param {String} claim
+ * @param {String} value
+ * @param {String} description
+ * @param {Number} index
+ * @param {Object} claimsObject
  */
-export const msalConfig = {
-    auth: {
-        clientId: '09dd92cf-78ba-4c25-94b2-ec3f3ef84352', // This is the ONLY mandatory field that you need to supply.
-        authority: b2cPolicies.authorities.signUpSignIn.authority, // Choose SUSI as your default authority.
-        knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
-        redirectUri: '/', // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
-        postLogoutRedirectUri: '/', // Indicates the page to navigate after logout.
-        navigateToLoginRequestUrl: false, // If "true", will navigate back to the original request location before processing the auth code response.
-    },
-    cache: {
-        cacheLocation: 'sessionStorage', // Configures cache location. "sessionStorage" is more secure, but "localStorage" gives you SSO between tabs.
-        storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
-    },
-    system: {
-        loggerOptions: {
-            loggerCallback: (level, message, containsPii) => {
-                if (containsPii) {
-                    return;
-                }
-                switch (level) {
-                    case LogLevel.Error:
-                        console.error(message);
-                        return;
-                    case LogLevel.Info:
-                        console.info(message);
-                        return;
-                    case LogLevel.Verbose:
-                        console.debug(message);
-                        return;
-                    case LogLevel.Warning:
-                        console.warn(message);
-                        return;
-                    default:
-                        return;
-                }
-            },
-        },
-    },
+const populateClaim = (claim, value, description, index, claimsObject) => {
+    let claimsArray = [];
+    claimsArray[0] = claim;
+    claimsArray[1] = value;
+    claimsArray[2] = description;
+    claimsObject[index] = claimsArray;
 };
-
 
 /**
- * Scopes you add here will be prompted for user consent during sign-in.
- * By default, MSAL.js will add OIDC scopes (openid, profile, email) to any login request.
- * For more information about OIDC scopes, visit:
- * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
+ * Transforms Unix timestamp to date and returns a string value of that date
+ * @param {String} date Unix timestamp
+ * @returns
  */
-export const loginRequest = {
-    scopes: [],
+const changeDateFormat = (date) => {
+    let dateObj = new Date(date * 1000);
+    return `${date} - [${dateObj.toString()}]`;
 };
-
 
 /**
- * An optional silentRequest object can be used to achieve silent SSO
- * between applications by providing a "login_hint" property.
+ * Compare the token issuing policy with a specific policy name
+ * @param {object} idTokenClaims - Object containing the claims from the parsed token
+ * @param {string} policyToCompare - ID/Name of the policy as expressed in the Azure portal
+ * @returns {boolean}
  */
-export const silentRequest = {
-    scopes: ["openid", "profile"],
-    loginHint: "example@domain.net"
-};
+export function compareIssuingPolicy(idTokenClaims, policyToCompare) {
+    let tfpMatches = idTokenClaims.hasOwnProperty('tfp') && idTokenClaims['tfp'].toLowerCase() === policyToCompare.toLowerCase();
+    let acrMatches = idTokenClaims.hasOwnProperty('acr') && idTokenClaims['acr'].toLowerCase() === policyToCompare.toLowerCase();
+    return tfpMatches || acrMatches;
+}

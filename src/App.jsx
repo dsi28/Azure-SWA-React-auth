@@ -11,7 +11,7 @@
 
 // export default App;
 
-import EventType from '@azure/msal-browser';
+import { EventType } from '@azure/msal-browser';
 import { MsalProvider, useMsal } from '@azure/msal-react';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
